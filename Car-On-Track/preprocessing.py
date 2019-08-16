@@ -47,5 +47,5 @@ def preprocess(img):
     img_edge = edges(resize(to_gray(img)))
     img_feats = crop(np.expand_dims(img_edge, 2))
     img_feats = np.array(img_feats, dtype=np.float32) / 255.0
-    img_feats = np.expand_dims(img_feats, axis=0)
+    #img_feats = np.expand_dims(img_feats, axis=0)
     return img_edge, img_feats
