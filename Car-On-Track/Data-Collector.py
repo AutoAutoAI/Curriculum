@@ -1,11 +1,11 @@
 from car.motors import (
         set_steering,
         set_throttle,
-        CAR_THROTTLE_FORWARD_SAFE_SPEED,
-        CAR_THROTTLE_REVERSE_SAFE_SPEED,
+        safe_forward_throttle,
+        safe_reverse_throttle,
 )
 
-from auto.camera import CameraRGB
+from auto.camera import global_camera
 
 from itertools import count
 import numpy as np
@@ -25,7 +25,7 @@ def collect_one_point(camera, steering_angle, Xs, ys):
     frame = resize(frame)
     set_steering(steering_angle)
     time.sleep(0.1)
-    set_throttle(CAR_THROTTLE_FORWARD_SAFE_SPEED)
+    set_throttle(safe_forward_throttle())
     time.sleep(0.2)
     set_throttle(0.0)
     Xs.append(frame)
@@ -33,7 +33,7 @@ def collect_one_point(camera, steering_angle, Xs, ys):
 
 
 def reverse():
-    set_throttle(CAR_THROTTLE_REVERSE_SAFE_SPEED)
+    set_throttle(safe_reverse_throttle())
     time.sleep(0.2)
     set_throttle(0.0)
 
@@ -50,7 +50,7 @@ def save_data(Xs, ys):
 
 
 def main():
-    camera = CameraRGB()
+    camera = global_camera()
 
     screen = curses.initscr()  # get the curses screen window
     curses.noecho()            # turn off input echoing
@@ -111,4 +111,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
